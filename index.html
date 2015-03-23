@@ -5,38 +5,8 @@
     <script src="jquery.js"></script>
     <script src="data_generator.js"></script>
     <script src="moment.js"></script>
+    <script src="twittler.js"></script>
   </head>
   <body>
-    <script>
-
-      $(document).ready(function(){
-        var $body = $('body');
-        $body.html("<button type='button' class='refresh'>Click Me!</button>");
-
-        var tweeter = function() {
-          var index = streams.home.length - 1;
-          while(index >= 0){
-            var tweet = streams.home[index];
-            var $tweet = $("<div class='tweet'></div>");
-            time = moment($tweet.created_at).fromNow();
-            $tweet.text('@' + tweet.user + ': ' + tweet.message);
-            $("<br>").appendTo($tweet);
-
-            var $time = $("<div class='time'></div>")
-            $time.text("-- " + time);
-            $time.appendTo($tweet);
-
-            $tweet.appendTo($body);
-            index -= 1;
-          }
-        }
-
-        tweeter();
-
-        $body.on('click', 'button', tweeter);
-
-      });
-
-    </script>
   </body>
 </html>

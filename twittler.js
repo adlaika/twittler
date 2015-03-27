@@ -1,3 +1,5 @@
+'use strict';
+
 $(document).ready(function() {
     var $body = $('body');
 
@@ -13,7 +15,7 @@ $(document).ready(function() {
     $tweets.appendTo($body);
 
     //return timestamp of now
-    var getTimeNow = function(){
+    var getTimeNow = function() {
         return moment();
     }
 
@@ -43,6 +45,17 @@ $(document).ready(function() {
     }
 
     var lastShownTweetIndex = 0;
+
+    //check to see if last shown tweet is newest
+    var checkForUnshownTweets = function() {
+        return lastShownTweetIndex < streams.home.length - 1;
+    }
+
+    var ifUnshownShowButton = function() {
+        if (checkForUnshownTweets()){
+            $('button').show();
+        }
+    }
 
     //create html and append for tweet given index (from stream). Default is newest tweet.
     var showTweet = function(index) {
@@ -80,10 +93,11 @@ $(document).ready(function() {
         var index = streams.home.length - 1;
     }
 
-    //click button to get new tweet
+    //click button to get new tweets
     $('button').on('click', function() {
         populateTweets(lastShownTweetIndex);
         lastShownTweet = getLastShownTweet();
+        $('button').hide();
     });
 
     // logs newest tweet every 1.5 secs, for debug
@@ -98,5 +112,6 @@ $(document).ready(function() {
     //initialize page
     populateTweets();
     var lastShownTweet = getLastShownTweet();
+    setInterval(ifUnshownShowButton, 1000);
 
 });

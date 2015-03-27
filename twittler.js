@@ -12,72 +12,91 @@ $(document).ready(function() {
     var $tweets = $("<div class='tweets'></div>");
     $tweets.appendTo($body);
 
+    //return timestamp of now
+    var getTimeNow = function(){
+        return moment();
+    }
+
+    //return reference to tweet given index
+    var getTweet = function(index) {
+        return streams.home[index];
+    }
+
     //return reference to newest tweet
     var newestTweet = function() {
         return streams.home.length - 1;
     };
 
     //return timestamp of given tweet.
-    var getTime = function(tweet) {
+    var getTweetTime = function(tweet) {
         return moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a');
     }
 
     //return easy to read timestamp.
-    var getTimeFromPost = function(tweet) {
+    var getTweetTimeFromPost = function(tweet) {
         return moment(tweet.created_at).fromNow();
     }
 
-    //return tweet given index (from stream). Default is newest tweet.
-    var getTweet = function(index) {
+    //return last shown tweet
+    var getLastShownTweet = function() {
+        return getTweet(newestTweet());
+    }
+
+    var lastShownTweetIndex = 0;
+
+    //create html and append for tweet given index (from stream). Default is newest tweet.
+    var showTweet = function(index) {
         index = index || newestTweet();
         var $tweetContainer = $("<div class='tweet container'></div>");
 
-        var tweet = streams.home[index];
+        var tweet = getTweet(index);
         var $tweet = $("<div class='tweet text'></div>");
-        var time = getTime(tweet);
+        var time = getTweetTime(tweet);
         var $time = $("<div class='tweet time'></div>");
         var user = tweet.user;
         var $user = $("<div class='tweet user'></div>");
 
         $user.text('@' + tweet.user);
         $tweet.text(tweet.message);
-        $time.text(' - ' + time);
+        $time.text(': ' + time);
 
         $user.appendTo($tweetContainer);
         $time.appendTo($tweetContainer);
         $('<br>').appendTo($tweetContainer);
         $tweet.appendTo($tweetContainer);
         $tweetContainer.prependTo($tweets);
+
+        lastShownTweetIndex = streams.home.length - 1;
     }
 
-    //grab all new tweets not yet shown
-    var getUnshownTweets = function() {
-
-    };
-
-    //populate page with first batch of tweets on page open / refresh
-    var populateTweets = function() {
+    //return tweets back to stop index. Default is all tweets.
+    var populateTweets = function(stop) {
+        stop = stop || 0;
         var index = streams.home.length - 1;
-        while (index >= 0) {
-            getTweet(index, false);
+        while (index >= stop + 1) {
+            showTweet(index);
             index -= 1;
         }
         var index = streams.home.length - 1;
     }
-    populateTweets();
 
     //click button to get new tweet
     $('button').on('click', function() {
-        getTweet();
+        populateTweets(lastShownTweetIndex);
+        lastShownTweet = getLastShownTweet();
     });
 
     // logs newest tweet every 1.5 secs, for debug
-    var logStream = function() {
-      var index = streams.home.length - 1;
-      console.log(JSON.stringify(streams.home[index], null, 4));
-      console.log('\n ====================================================================== \n')
-    }
-    logStream();
-    setInterval(logStream, 1500);
+    // var logStream = function() {
+    //   var index = streams.home.length - 1;
+    //   console.log(JSON.stringify(streams.home[index], null, 4));
+    //   console.log('\n ====================================================================== \n')
+    // }
+    // logStream();
+    // setInterval(logStream, 1500);
+
+    //initialize page
+    populateTweets();
+    var lastShownTweet = getLastShownTweet();
 
 });

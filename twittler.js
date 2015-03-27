@@ -1,10 +1,15 @@
 $(document).ready(function() {
     var $body = $('body');
 
-    //create button to grab new tweets
-    $body.html("<button type='button' class='refresh'>More Tweets!</button>");
+    //create nav bar
+    var $navbar = $("<div class='navbar'></div>");
+    $navbar.appendTo($body);
 
-    var $tweets = $("<div class='tweet tweets'></div>");
+    //create button to grab new tweets
+    $navbar.html("<button type='button' class='refresh'>More Tweets!</button>");
+
+    //create div where tweets live
+    var $tweets = $("<div class='tweets'></div>");
     $tweets.appendTo($body);
 
     //return reference to newest tweet
@@ -14,7 +19,7 @@ $(document).ready(function() {
 
     //return timestamp of given tweet.
     var getTime = function(tweet) {
-        return moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss:SSS a');
+        return moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a');
     }
 
     //return easy to read timestamp.
@@ -34,23 +39,23 @@ $(document).ready(function() {
         var user = tweet.user;
         var $user = $("<div class='tweet user'></div>");
 
-        $user.text('@' + tweet.user + ': ');
+        $user.text('@' + tweet.user);
         $tweet.text(tweet.message);
-        $time.text("- " + time);
+        $time.text(' - ' + time);
 
         $user.appendTo($tweetContainer);
-        $("<br>").appendTo($tweetContainer);
-        $tweet.appendTo($tweetContainer);
-        $("<br>").appendTo($tweetContainer);
         $time.appendTo($tweetContainer);
+        $('<br>').appendTo($tweetContainer);
+        $tweet.appendTo($tweetContainer);
         $tweetContainer.prependTo($tweets);
     }
 
+    //grab all new tweets not yet shown
     var getUnshownTweets = function() {
 
     };
 
-    //populate page with first batch of tweets
+    //populate page with first batch of tweets on page open / refresh
     var populateTweets = function() {
         var index = streams.home.length - 1;
         while (index >= 0) {
@@ -61,17 +66,18 @@ $(document).ready(function() {
     }
     populateTweets();
 
+    //click button to get new tweet
     $('button').on('click', function() {
         getTweet();
     });
 
     // logs newest tweet every 1.5 secs, for debug
-    // var logStream = function() {
-    //   var index = streams.home.length - 1;
-    //   console.log(JSON.stringify(streams.home[index], null, 4));
-    //   console.log('\n ====================================================================== \n')
-    // }
-    // logStream();
-    // setInterval(logStream, 1500);
+    var logStream = function() {
+      var index = streams.home.length - 1;
+      console.log(JSON.stringify(streams.home[index], null, 4));
+      console.log('\n ====================================================================== \n')
+    }
+    logStream();
+    setInterval(logStream, 1500);
 
 });

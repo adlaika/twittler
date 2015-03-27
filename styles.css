@@ -1,32 +1,47 @@
 body {
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+}
+
+.navbar {
+  border-bottom: 1px black;
+  margin-top: 0px;
+}
+
+.tweet {
+  border-radius: 5px;
 }
 
 button.refresh {
   display: block;
-  margin-top: 10px;
-  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
   font-size: 1.5em;
 }
 
 div.tweets{
-  border: solid;
-  margin: 1%;
-  padding: 1%;
   background-color: lightgray;
+  padding-top: 1%;
 }
 
 div.tweet.container {
-  background-color: lightblue;
+  background-color: white;
   padding: 1% 1% 1% 1%;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 1%;
-  width: 40%;
+  margin-bottom: .5%;
+  width: 50%;
   text-align: left;
   border: dotted;
   border-width: 1px;
+}
+
+div.tweet.time {
+  float: left;
+}
+div.tweet.user {
+  float: left;
+}
+div.tweet.text {
+  position: block;
 }

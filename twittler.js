@@ -7,12 +7,13 @@ $(document).ready(function() {
     var $navbar = $("<div class='navbar'></div>");
     $navbar.appendTo($body);
 
-    //create button to grab new tweets
-    $navbar.html("<button type='button' class='refresh'>More Tweets!</button>");
-
     //create div where tweets live
     var $tweets = $("<div class='tweets'></div>");
     $tweets.appendTo($body);
+
+    //create button to grab new tweets
+    var $refresh = $("<div class='refresh'>More Tweets!</button>");
+    $refresh.insertAfter('body div:lt(1)');
 
     //return timestamp of now
     var getTimeNow = function() {
@@ -53,7 +54,7 @@ $(document).ready(function() {
 
     var ifUnshownShowButton = function() {
         if (checkForUnshownTweets()){
-            $('button').show();
+            $('.refresh').show();
         }
     }
 
@@ -94,10 +95,10 @@ $(document).ready(function() {
     }
 
     //click button to get new tweets
-    $('button').on('click', function() {
+    $refresh.on('click', function() {
         populateTweets(lastShownTweetIndex);
         lastShownTweet = getLastShownTweet();
-        $('button').hide();
+        $refresh.hide();
     });
 
     // logs newest tweet every 1.5 secs, for debug

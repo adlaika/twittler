@@ -1,50 +1,73 @@
 body {
-  margin: 0;
-  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    margin: 0;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #79BD8F;
 }
 
-.navbar {
-  background-color: lightblue;
-  border-bottom: 1px black;
-  margin-top: 0px;
-  height: 2em;
-  display: block;
+div.navbar {
+    background-color: #FFF;
+    border-bottom: 1px solid #00A388;
+    margin-top: 0px;
+    height: 2em;
+    display: block;
 }
 
-button.refresh {
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 1em;
-  display: none;
+.refresh {
+    width: 50%;
+    display: block;
+    margin: auto;
+    margin-top: 1%;
+    outline: none;
+    color: #FFF;
+    text-decoration: none;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    background-color: #FF6138;
+    border: none;
+    border-bottom: 1px solid #BD4829;
 }
 
-div.tweets{
-  display: block;
-  margin-right: auto;
-  margin-left: auto;
-  background-color: lightgray;
-  padding-top: 1%;
-  width: 50%;
+.refresh:hover {
+    background-color: #D9522F;
+    border-bottom: 1px solid #B54528;
+}
+
+.refresh:active {
+    background-color: #E35632;
+    border-bottom: 1px solid #C44B2B;
+}
+
+div.tweets {
+    display: block;
+    margin-top: 1%;
+    margin-right: auto;
+    margin-left: auto;
+    padding-bottom: 1%;
+    background-color: #BEEB9F;
+    padding-top: 1%;
+    width: 50%;
+    border-radius: 5px;
+    border: 1px solid #00A388;
 }
 
 div.tweet.container {
-  background-color: white;
-  padding: 1% 1% 1% 1%;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: .5%;
-  width: 90%;
-  text-align: left;
-  border: dotted;
-  border-width: 1px;
+    background-color: white;
+    padding: 1% 1% 1% 1%;
+    margin-left: 0;
+    margin-right: 0;
+    text-align: left;
+    border-top: 1px solid #00A388;
 }
 
 div.tweet.time {
-  float: left;
+    float: left;
 }
+
 div.tweet.user {
-  float: left;
+    float: left;
 }
+
 div.tweet.text {
-  position: block;
+    position: block;
 }

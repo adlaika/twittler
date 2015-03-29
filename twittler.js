@@ -55,13 +55,8 @@ $(document).ready(function() {
         }
     }
 
-    var showUsersTweets = function(user) {
-        var tweet = streams.users[user][streams.users[user].length - 1];
-        console.log(tweet);
-    }
-
     //create and show tweet given index and stream. Default is newest tweet.
-    var showTweet = function(index, stream) {
+    var showTweet = function(index, stream, prependTarget) {
         index = index || newestTweet(stream);
         var $tweetContainer = $("<div class='tweet container'></div>");
 
@@ -83,33 +78,33 @@ $(document).ready(function() {
         $time.appendTo($tweetContainer);
         $('<br>').appendTo($tweetContainer);
         $tweet.appendTo($tweetContainer);
-        $tweetContainer.prependTo($tweets);
+        $tweetContainer.prependTo(prependTarget);
 
         //set username link click behavior
         var $link = $("#" + user);
         $link.on('click', function(event) {
             event.preventDefault();
             //console.log(JSON.stringify(streams.users[user], null, 4));
-            return showUsersTweets(user);
+            populateTweets(0, streams.users[user], $body);
         });
 
         lastShownTweetIndex = streams.home.length - 1;
     }
 
     //return tweets back to stop index. Default is all tweets.
-    var populateTweets = function(stop) {
+    var populateTweets = function(stop, stream, prependTarget) {
         stop = stop || 0;
-        var index = streams.home.length - 1;
+        var index = stream.length - 1;
         while (index >= stop + 1) {
-            showTweet(index, streams.home);
+            showTweet(index, stream, prependTarget);
             index -= 1;
         }
-        var index = streams.home.length - 1;
+        var index = stream.length - 1;
     }
 
     //click button to get new tweets
     $refresh.click(function() {
-        populateTweets(lastShownTweetIndex);
+        populateTweets(lastShownTweetIndex, streams.home, $tweets);
         //lastShownTweet = getLastShownTweet();
         $refresh.hide();
     });
@@ -124,7 +119,7 @@ $(document).ready(function() {
     // setInterval(logStream, 1500);
 
     //initialize page
-    populateTweets();
+    populateTweets(0, streams.home, $tweets);
     //var lastShownTweet = getLastShownTweet();
     setInterval(ifUnshownShowButton, 1000);
 

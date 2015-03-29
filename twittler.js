@@ -20,9 +20,8 @@ $(document).ready(function() {
         return moment();
     }
 
-    //return reference to tweet given index
-    var getTweet = function(index) {
-        return streams.home[index];
+    var getTweet = function(index, stream) {
+        return stream[index];
     }
 
     //return reference to newest tweet
@@ -42,7 +41,7 @@ $(document).ready(function() {
 
     //return last shown tweet
     var getLastShownTweet = function() {
-        return getTweet(newestTweet());
+        return getTweet(newestTweet(), streams.home);
     }
 
     var lastShownTweetIndex = 0;
@@ -53,24 +52,32 @@ $(document).ready(function() {
     }
 
     var ifUnshownShowButton = function() {
-        if (checkForUnshownTweets()){
+        if (checkForUnshownTweets()) {
             $('.refresh').show();
         }
     }
 
-    //create html and append for tweet given index (from stream). Default is newest tweet.
+    var showUsersTweets = function(user) {
+        var tweet = streams.users[user][streams.users[user].length - 1];
+        console.log(tweet);
+    }
+
+    //create and show tweet given index (from streams.home). Default is newest tweet.
     var showTweet = function(index) {
         index = index || newestTweet();
         var $tweetContainer = $("<div class='tweet container'></div>");
 
-        var tweet = getTweet(index);
+        var tweet = getTweet(index, streams.home);
         var $tweet = $("<div class='tweet text'></div>");
         var time = getTweetTime(tweet);
         var $time = $("<div class='tweet time'></div>");
         var user = tweet.user;
         var $user = $("<div class='tweet user'></div>");
+        //create username link
+        var link = "<a class='link' id=" + user + " href='#'>" + user + "</a>";
 
-        $user.text('@' + tweet.user);
+        //create tweet, add to structure
+        $user.html('@' + link);
         $tweet.text(tweet.message);
         $time.text(': ' + time);
 
@@ -79,6 +86,14 @@ $(document).ready(function() {
         $('<br>').appendTo($tweetContainer);
         $tweet.appendTo($tweetContainer);
         $tweetContainer.prependTo($tweets);
+
+        //set username link click behavior
+        var $link = $("#" + user);
+        $link.on('click', function(event) {
+            event.preventDefault();
+            //console.log(JSON.stringify(streams.users[user], null, 4));
+            return showUsersTweets(user);
+        });
 
         lastShownTweetIndex = streams.home.length - 1;
     }
@@ -95,9 +110,9 @@ $(document).ready(function() {
     }
 
     //click button to get new tweets
-    $refresh.on('click', function() {
+    $refresh.click(function() {
         populateTweets(lastShownTweetIndex);
-        lastShownTweet = getLastShownTweet();
+        //lastShownTweet = getLastShownTweet();
         $refresh.hide();
     });
 
@@ -112,7 +127,7 @@ $(document).ready(function() {
 
     //initialize page
     populateTweets();
-    var lastShownTweet = getLastShownTweet();
+    //var lastShownTweet = getLastShownTweet();
     setInterval(ifUnshownShowButton, 1000);
 
 });

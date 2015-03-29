@@ -15,7 +15,6 @@ $(document).ready(function() {
     var $refresh = $("<div class='refresh'>More Tweets!</button>");
     $refresh.insertAfter('body div:lt(1)');
 
-    //return timestamp of now
     var getTimeNow = function() {
         return moment();
     }
@@ -24,9 +23,8 @@ $(document).ready(function() {
         return stream[index];
     }
 
-    //return reference to newest tweet
-    var newestTweet = function() {
-        return streams.home.length - 1;
+    var newestTweet = function(stream) {
+        return stream.length - 1;
     };
 
     //return timestamp of given tweet.
@@ -41,7 +39,7 @@ $(document).ready(function() {
 
     //return last shown tweet
     var getLastShownTweet = function() {
-        return getTweet(newestTweet(), streams.home);
+        return getTweet(newestTweet(streams.home), streams.home);
     }
 
     var lastShownTweetIndex = 0;
@@ -62,12 +60,12 @@ $(document).ready(function() {
         console.log(tweet);
     }
 
-    //create and show tweet given index (from streams.home). Default is newest tweet.
-    var showTweet = function(index) {
-        index = index || newestTweet();
+    //create and show tweet given index and stream. Default is newest tweet.
+    var showTweet = function(index, stream) {
+        index = index || newestTweet(stream);
         var $tweetContainer = $("<div class='tweet container'></div>");
 
-        var tweet = getTweet(index, streams.home);
+        var tweet = getTweet(index, stream);
         var $tweet = $("<div class='tweet text'></div>");
         var time = getTweetTime(tweet);
         var $time = $("<div class='tweet time'></div>");
@@ -103,7 +101,7 @@ $(document).ready(function() {
         stop = stop || 0;
         var index = streams.home.length - 1;
         while (index >= stop + 1) {
-            showTweet(index);
+            showTweet(index, streams.home);
             index -= 1;
         }
         var index = streams.home.length - 1;

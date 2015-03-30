@@ -1,3 +1,6 @@
+//global ignores for JSLint
+/*global streams*/
+
 'use strict';
 
 $(document).ready(function () {
@@ -15,10 +18,6 @@ $(document).ready(function () {
   var $refresh = $("<div class='refresh'>More Tweets!</button>");
   $refresh.insertAfter('body div:lt(1)');
 
-  var getTimeNow = function () {
-    return moment();
-  };
-
   var getTweet = function (index, stream) {
     return stream[index];
   };
@@ -32,15 +31,15 @@ $(document).ready(function () {
     return moment(tweet.created_at).format('MMMM Do YYYY, h:mm:ss a');
   };
 
-  //return easy to read timestamp.
-  var getTweetTimeFromPost = function (tweet) {
-    return moment(tweet.created_at).fromNow();
-  };
+  // //return easy to read timestamp.
+  // var getTweetTimeFromPost = function (tweet) {
+  //   return moment(tweet.created_at).fromNow();
+  // };
 
-  //return last shown tweet
-  var getLastShownTweet = function () {
-    return getTweet(newestTweet(streams.home), streams.home);
-  };
+  // //return last shown tweet
+  // var getLastShownTweet = function () {
+  //   return getTweet(newestTweet(streams.home), streams.home);
+  // };
 
   var lastShownTweetIndex = 0;
 
@@ -85,7 +84,10 @@ $(document).ready(function () {
     $link.on('click', function (event) {
       event.preventDefault();
       //console.log(JSON.stringify(streams.users[user], null, 4));
-      populateTweets(0, streams.users[user], $body);
+      var $userTweets = $("<div class='userTweets'></div>");
+      populateTweets(0, streams.users[user], $userTweets);
+      $("<span class='hisTweets'>" + user + "'s tweets:" + "</span>").prependTo($userTweets);
+      $userTweets.insertAfter($refresh);
     });
 
     lastShownTweetIndex = streams.home.length - 1;
@@ -98,8 +100,8 @@ $(document).ready(function () {
     while (index >= stop + 1) {
       showTweet(index, stream, prependTarget);
       index -= 1;
-    };
-    var index = stream.length - 1;
+    }
+    index = stream.length - 1;
   };
 
   //click button to get new tweets

@@ -27,32 +27,30 @@ body {
     padding: .5%;
 }
 
-#columns > .column {
-    display: inline-block;
-    margin: .5%;
+#new-tweet {
+    diplay: block;
+    margin: 1%;
+    margin-right: auto;
+    margin-left: auto;
 }
 
-#leftcolumn {
-    height: 200px;
-    float: left;
+#new-tweet input[name="new-message"] {
+    width: 89%;
+    margin-left: 1%;
 }
 
-#leftcolumn > #users {
+#tweet-column {
     display: inline-block;
-    border: 1px solid black;
-}
-
-#rightcolumn {
-    display: inline-block;
-
-    min-width: 50%;
+    width: 50%;
+    margin-right: auto;
+    margin-left: auto;
     padding-bottom: 1%;
     background-color: #BEEB9F;
     border-radius: 5px;
     border: 1px solid #00A388;
 }
 
-#rightcolumn > #show-tweets {
+#tweet-column > #show-tweets {
     display: block;
     margin: 1%;
     margin-top: 1.5%;
@@ -67,12 +65,12 @@ body {
     border-bottom: 1px solid #BD4829;
 }
 
-#rightcolumn > #show-tweets:hover {
+#tweet-column > #show-tweets:hover {
     background-color: #D9522F;
     border-bottom: 1px solid #B54528;
 }
 
-#rightcolumn > #show-tweets:active {
+#tweet-column > #show-tweets:active {
     background-color: #E35632;
     border-bottom: 1px solid #C44B2B;
 }

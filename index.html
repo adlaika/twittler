@@ -1,25 +1,31 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <link rel="stylesheet" type="text/css" href="styles.css">
-    <script src="jquery.js"></script>
-    <script src="data_generator.js"></script>
-    <script src="moment.js"></script>
-    <script src="twittler.js"></script>
-  </head>
-  <body>
-    <div id="layout">
-      <div id="header">
-        <span id="title">twittler</span>
-      </div>
-      <div id="columns">
-        <div id="leftcolumn" class="column">
+
+<head>
+  <link rel="stylesheet" type="text/css" href="styles.css">
+  <script src="jquery.js"></script>
+  <script src="data_generator.js"></script>
+  <script src="moment.js"></script>
+  <script src="twittler.js"></script>
+</head>
+
+<body>
+  <div id="layout">
+    <div id="header">
+      <span id="title">twittler</span>
+    </div>
+    <div id="columns">
+      <div id="tweet-column" class="column">
+        <div id="new-tweet">
+            <!--<input type="text" name="new-name" placeholder="Username">-->
+            <input type="text" name="new-message" placeholder="What's going on?">
+            <input type="button" value="Post!" id="new-submit">
         </div>
-        <div id="rightcolumn" class="column">
-          <div id="show-tweets">Refresh Tweets</div>
-          <div id="tweets"></div>
-        </div>
+        <div id="show-tweets">Refresh Tweets</div>
+        <div id="tweets"></div>
       </div>
     </div>
-  </body>
+  </div>
+</body>
+
 </html>

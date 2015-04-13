@@ -1,16 +1,21 @@
 //global ignores for JSHint
 /* global streams: false, $: false, moment: false */
 
+//---GLOBAL VARS---
+var visitor = 'marnold';
+
 (function () {
   'use strict';
 
-  //---GLOBAL VARS---
+  //---TWITTLER.JS SCOPE VARS---
   var $body = $('body');
   var $tweets = $('#tweets');
   var $showTweets = $('#show-tweets');
   var $columns = $('#columns');
 
   var lastShownTweet = {};
+
+  streams.users.marnold = [];
 
   //---BEHAVIOR---
   $(document).ready(function () {
@@ -28,8 +33,15 @@
     $(document).on('click', '.user', function (event) {
       event.preventDefault();
       showUserTweets(event.target.id);
-      console.log(event.target.id);
+      //console.log(event.target.id);
     });
+
+    //write your own functionality
+    $(document).on('click', '#new-submit', function () {
+      var newTweet = $("input:text[name=new-message]").val();
+      writeTweet(newTweet);
+      populateTweets(streams.home, 0, '#tweets');
+    })
   });
 
   //---HELPER FUNCTIONS---
